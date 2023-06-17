@@ -158,10 +158,6 @@ async function listGuides() {
         </div>
       </div>
     `;
-
-    let button = document.getElementById(`guide-${i}-save-btn`)
-    button.addEventListener('click', editGuide);
-    button.guideId = i;
   }
 
   for (let j = 0; j < guideCount; j++) {
@@ -178,6 +174,9 @@ async function listGuides() {
         done();
       }
     });
+    let button = document.getElementById(`guide-${j}-save-btn`)
+    button.addEventListener('click', editGuide);
+    button.guideId = j;
   }
 
   let loader = document.getElementById('loader');
