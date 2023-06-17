@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--====== Required meta tags ======-->
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="description" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!--====== Title ======-->
+    <title>Home | OurTour</title>
+
+    <!--====== Favicon ======-->
+    <link
+      rel="shortcut icon"
+      href="assets/images/favicon.ico"
+      type="image/png"
+    />
+
+    <!--====== Bootstrap CSS ======-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.ayroui.com/1.0/css/bootstrap.min.css"
+    />
+
+    <!--====== Lineicons CSS ======-->
+    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet" />
+
+    <!--====== Style css ======-->
+    <link rel="stylesheet" href="https://cdn.ayroui.com/1.0/css/starter.css" />
+    <link rel="stylesheet" href="assets/css/global.css" />
+  </head>
+
+  <body>
+    <!--====== NAVBAR ONE PART START ======-->
+    <section class="navbar-area navbar-one">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <nav class="navbar navbar-expand-lg">
+              <a class="navbar-brand" href="javascript:void(0)">
+                <img src="assets/images/logo.png" height="40px" alt="Logo" />
+              </a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarOne"
+                aria-controls="navbarOne"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="toggler-icon"></span>
+                <span class="toggler-icon"></span>
+                <span class="toggler-icon"></span>
+              </button>
+              <div
+                class="collapse navbar-collapse sub-menu-bar"
+                style="justify-content: end"
+                id="navbarOne"
+              >
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a href="javascript:void(0)">
+                      <i
+                        class="lni lni-search-alt"
+                        style="font-size: 21px; padding-left: 0"
+                      ></i>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a onclick="viewGuides()" style="cursor: pointer;">Ver guías disponibles</a>
+                  </li>
+                  <li class="nav-item" id="create-guide-nav" style="display: none;">
+                    <a onclick="createGuide()" style="cursor: pointer;">Crea una guía</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="navbar-btn d-none d-sm-inline-block">
+                <ul>
+                  <li id="sign-in-div">
+                    <a class="btn primary-btn-outline" id="sign-in-btn"
+                      >Conecta tu cartera</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </nav>
+            <!-- navbar -->
+          </div>
+        </div>
+        <!-- row -->
+      </div>
+      <!-- container -->
+    </section>
+    <!--====== NAVBAR ONE PART ENDS ======-->
+
+    <!-- Aqui puede ir el buscador -->
+
+    <div id="create-guide" class="single-card card-style-one mt-5 mb-5" style="display: none">
+      <div class="card-content">
+        <h4 class="card-title">
+          <a href="javascript:void(0)">Crea una guía</a>
+        </h4>
+        <div>
+          <label class="mt-3">Titulo</label>
+          <div class="input-items default mt-1">
+            <input type="text" id="new-guide-title" style="width: 100%; border: none; border-bottom: 1px solid black;"/>
+          </div>
+          <label class="mt-3">Descripción</label>
+          <div class="input-items default mt-1">
+            <input type="text" id="new-guide-description" style="width: 100%; border: none; border-bottom: 1px solid black;"/>
+          </div>
+          <label class="mt-3">Ubicación</label>
+          <div class="input-items default mt-1">
+            <input type="text" id="new-guide-location" style="width: 100%; border: none; border-bottom: 1px solid black;"/>
+          </div>
+        </div>
+        <button class="btn primary-btn mt-3 mb-3" style="float: right;" id="create-btn">Crear guía</button>
+      </div>
+    </div>
+
+    <div class="section-title-one" id="guides-title">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="text-center">
+              <div class="content">
+                <h2 style="font-weight: lighter; margin-top: 30px">
+                  Guías disponibles
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- row -->
+      </div>
+      <!-- container -->
+    </div>
+
+    <div id="loader">
+      <lottie-player src="https://assets2.lottiefiles.com/private_files/lf30_lndg7fhf.json"  background="transparent"  speed="1" loop autoplay></lottie-player>
+    </div>
+
+    <!--====== BLOG PART START ======-->
+    <section class="blog-area pb-5" id="guides-section">
+      <div class="container">
+        <div class="row justify-content-center" id="guideList">
+        </div>
+        <!-- row -->
+      </div>
+      <!-- container -->
+    </section>
+    <!--====== BLOG PART ENDS ======-->
+
+    <!--====== FOOTER ONE PART START ======-->
+    <footer class="footer-area footer-one">
+      <div class="footer-widget">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-6 col-lg-4 col-sm-12">
+              <div class="f-about">
+                <div class="footer-logo">
+                  <a href="javascript:void(0)">
+                    <img
+                      src="assets/images/logo.png"
+                      alt="Logo"
+                      style="height: 60px;filter: invert(1);"
+                    />
+                  </a>
+                </div>
+                <p class="text">
+                  Discovering new places has never been easier.
+                </p>
+              </div>
+              <div class="footer-app-store">
+                <h5 class="download-title">Download Our App Now!</h5>
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <img
+                        src="https://cdn.ayroui.com/1.0/images/footer/app-store.svg"
+                        alt="app"
+                      />
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <img
+                        src="https://cdn.ayroui.com/1.0/images/footer/play-store.svg"
+                        alt="play"
+                      />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-sm-4">
+              <div class="footer-link">
+                <h6 class="footer-title">Compañía</h6>
+                <ul>
+                  <li><a href="javascript:void(0)">Quiénes somos</a></li>
+                  <li><a href="javascript:void(0)">Contacto</a></li>
+                  <li><a href="javascript:void(0)">Premios</a></li>
+                </ul>
+              </div>
+              <!-- footer link -->
+            </div>
+            <div class="col-xl-2 col-lg-3 col-sm-4">
+              <div class="footer-link">
+                <h6 class="footer-title">Inspiración</h6>
+                <ul>
+                  <li><a href="javascript:void(0)">Destinos</a></li>
+                  <li><a href="javascript:void(0)">Free tours</a></li>
+                  <li><a href="javascript:void(0)">Top creadores</a></li>
+                </ul>
+              </div>
+              <!-- footer link -->
+            </div>
+            <div class="col-xl-2 col-lg-3 col-sm-4">
+              <!-- Start Footer Contact -->
+              <div class="footer-contact">
+                <h6 class="footer-title">Ayuda</h6>
+                <ul>
+                  <li>
+                    <i class="lni lni-map-marker"></i> Calle Fuencarral, 35, 28045, Madrid,
+                    España
+                  </li>
+                  <li><i class="lni lni-phone-set"></i> +34 689 532 165</li>
+                  <li><i class="lni lni-envelope"></i> support@ourtour.com</li>
+                </ul>
+              </div>
+              <!-- End Footer Contact -->
+            </div>
+          </div>
+          <!-- row -->
+        </div>
+        <!-- container -->
+      </div>
+      <!-- footer widget -->
+      <div class="footer-copyright">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div
+                class="copyright text-center d-md-flex justify-content-between align-items-center"
+              >
+                <p class="text">Copyright © 2023 OurTour. All Rights Reserved</p>
+                <ul class="social">
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="lni lni-facebook-filled"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="lni lni-twitter-original"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="lni lni-instagram-filled"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)"
+                      ><i class="lni lni-linkedin-original"></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+              <!-- copyright -->
+            </div>
+          </div>
+          <!-- row -->
+        </div>
+        <!-- container -->
+      </div>
+      <!-- footer copyright -->
+    </footer>
+    <!--====== FOOTER ONE PART ENDS ======-->
+  </body>
+
+  <!--====== Bootstrap js ======-->
+  <script src="https://cdn.ayroui.com/1.0/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    //===== close navbar-collapse when a  clicked
+    let navbarTogglerOne = document.querySelector(
+      ".navbar-one .navbar-toggler"
+    );
+    navbarTogglerOne.addEventListener("click", function () {
+      navbarTogglerOne.classList.toggle("active");
+    });
+    let display_none = "display: none"
+
+    function enableEditGuide(guideId) {
+      let elems = ["location", "title", "description"]
+
+      for (let elem of elems) {
+        console.log(`guide-${guideId}-elem`)
+        let htmlElem = document.getElementById(`guide-${guideId}-${elem}`);
+        let htmlElemEdit = document.getElementById(`guide-${guideId}-edit-${elem}`);
+        htmlElem.style = display_none;
+        htmlElemEdit.style = '';
+      }
+
+      document.getElementById(`edit-guide-button-${guideId}`).style = display_none;
+      document.getElementById(`edit-buttons-${guideId}`).style = '';
+    }
+
+    function disableEditGuide(guideId) {
+      let elems = ["location", "title", "description"]
+
+      for (let elem of elems) {
+        let htmlElem = document.getElementById(`guide-${guideId}-${elem}`);
+        let htmlElemEdit = document.getElementById(`guide-${guideId}-edit-${elem}`);
+        htmlElem.style = 'display: inline';
+        htmlElemEdit.style = display_none;
+      }
+
+      document.getElementById(`edit-guide-button-${guideId}`).style = '';
+      document.getElementById(`edit-buttons-${guideId}`).style = display_none;
+    }
+
+    function createGuide() {
+      document.getElementById("guides-title").style = display_none;
+      document.getElementById("guides-section").style = display_none;
+      document.getElementById("create-guide").style = 'width: 50vw; margin: auto;';
+    }
+
+    function viewGuides() {
+      document.getElementById("guides-title").style = '';
+      document.getElementById("guides-section").style = '';
+      document.getElementById("create-guide").style = display_none;
+    }
+
+  </script>
+
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <script src="app.js" type="module"></script>
+
+</html>
