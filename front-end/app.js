@@ -103,6 +103,20 @@ async function evaluateGuide(guideId, score) {
   listGuides();
 }
 
+async function payGuide(event) {
+  let guideId = event.currentTarget.guideId;
+  let amount = document.getElementById(`guide-${guideId}-amount`).value;
+  let weiAmount = amount * 10e17
+  console.log("Sending ", weiAmount, " WEI to ", guideId, "creator from account", account)
+  try {
+    await contract.methods.payGuide(guideId).send({from: account, value: weiAmount, gas: '1000000000'});
+  } catch (error) {
+    console.error(error);
+    alert('Por favor, conecta tu cartera para poder pagar a un guía.');
+  }
+  listGuides();
+}
+
 async function listGuides() {
   const guideCount = await contract.methods.guideCount().call();
   let guideListDiv = document.getElementById('guideList');
@@ -120,6 +134,13 @@ async function listGuides() {
       let imageSrc = images[i % images.length]
 
       let editButton = `<p class="more" onclick="enableEditGuide(${i})">EDITAR GUÍA</p>`
+      let payButton = `
+      <div style="display: flex">
+        <input type="number" value="0.0063" step="0.0001" min="0" id="guide-${i}-amount" class="money-amount"/>
+        <i class="lni lni-ethereum" style="font-size: 21px; margin: auto; margin-top: 26px; margin-left: 0;"></i>
+        <p class="btn primary-btn mt-3" id="guide-${i}-pay-btn" onclick="payGuide(${i})">PAGAR AL GUÍA</p>
+      </div>
+      `
       guideListDiv.innerHTML += `
       <div class="col-lg-4 col-md-8 col-sm-10">
         <div class="single-blog blog-style-one" id="guide-${i}">
@@ -148,7 +169,7 @@ async function listGuides() {
               <input id="guide-${i}-edit-description" type="text" value="${guideIPFS.description}" style="display: none">
             </p>
             <div id="edit-guide-button-${i}">
-            ${guide.creator.toLowerCase() == account ? editButton : ''}
+            ${guide.creator.toLowerCase() == account ? editButton : payButton}
             </div>
             <div id="edit-buttons-${i}" class="mt-3" style="display: none">
               <button class="btn primary-btn" id="guide-${i}-save-btn">Guardar</button>
@@ -174,9 +195,17 @@ async function listGuides() {
         done();
       }
     });
-    let button = document.getElementById(`guide-${j}-save-btn`)
-    button.addEventListener('click', editGuide);
-    button.guideId = j;
+
+    if(guide.creator.toLowerCase() == account) {
+      let saveButton = document.getElementById(`guide-${j}-save-btn`)
+      saveButton.addEventListener('click', editGuide);
+      saveButton.guideId = j;
+    } else {
+      let payButton = document.getElementById(`guide-${j}-pay-btn`)
+      payButton.addEventListener('click', payGuide);
+      payButton.guideId = j;
+    }
+
   }
 
   let loader = document.getElementById('loader');

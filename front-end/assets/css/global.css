@@ -953,3 +953,9 @@ body {
   height: 300px;
   margin: 0 auto;
 }
+
+.money-amount {
+  width: 100px;
+  margin:auto;
+  margin-top: 26px;
+}

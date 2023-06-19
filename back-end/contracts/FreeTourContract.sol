@@ -15,6 +15,7 @@ contract FreeTourContract {
     event GuideUploaded(uint256 indexed guideId, address indexed creator, string ipfsHash);
     event GuideEdited(uint256 indexed guideId, string newIpfsHash);
     event GuideEvaluated(uint256 indexed guideId, uint256 newScore);
+    event GuidePayed(uint256 indexed guideId, uint256 amount);
 
     function uploadGuide(string calldata ipfsHash) public {
         require(bytes(ipfsHash).length != 0, "IPFS hash cannot be empty");
@@ -49,4 +50,17 @@ contract FreeTourContract {
 
         emit GuideEvaluated(guideId, guide.score);
     }
+
+    function payGuide(uint256 guideId) public payable {
+        require(guideId < guideCount, "Guide does not exist");
+
+        Guide storage guide = guides[guideId];
+        require(msg.value > 0, "Amount must be greater than zero");
+
+        address payable creator = payable(guide.creator);
+        creator.transfer(msg.value);
+
+        emit GuidePayed(guideId, msg.value);
+    }
+
 }
