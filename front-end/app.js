@@ -108,11 +108,35 @@ async function payGuide(event) {
   let amount = document.getElementById(`guide-${guideId}-amount`).value;
   let weiAmount = amount * 10e17
   console.log("Sending ", weiAmount, " WEI to ", guideId, "creator from account", account)
+  // try {
+  //   await contract.methods.payGuide(guideId).send({from: account, value: weiAmount, gas: '1000000000'});
+  // } catch (error) {
+  //   console.error(error);
+  //   alert('Por favor, conecta tu cartera para poder pagar a un guía.');
+  // }
+  let guide = await contract.methods.guides(guideId).call();
   try {
-    await contract.methods.payGuide(guideId).send({from: account, value: weiAmount, gas: '1000000000'});
+    await ethereum.send(
+      {
+        method: 'eth_sendTransaction',
+        params: [
+          {
+            from: ethereum.selectedAddress,
+            to: guide.creator,
+            value: web3.utils.toHex(weiAmount)
+          }
+        ]
+      },
+      function (err, transactionHash) {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log('Transaction hash:', transactionHash);
+        }
+      }
+    );
   } catch (error) {
     console.error(error);
-    alert('Por favor, conecta tu cartera para poder pagar a un guía.');
   }
   listGuides();
 }
